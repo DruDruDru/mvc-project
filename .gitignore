@@ -2,3 +2,5 @@
 .vscode
 vendor/
 composer.lock
+access.log
+error.log
