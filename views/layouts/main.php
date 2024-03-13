@@ -20,7 +20,7 @@
         <?php
         else:
             ?>
-            <a href="<?= app()->route->getUrl('/logout') ?>">Выход (<?= app()->auth::user()->name ?>)</a>
+            <a href="<?= app()->route->getUrl('/logout') ?>">Выход (<?= app()->auth::user()->login ?>)</a>
         <?php
         endif;
         ?>
