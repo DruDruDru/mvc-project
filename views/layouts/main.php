@@ -26,7 +26,7 @@
         ?>
     </nav>
 </header>
-<main>
+<main class="flex justify-center">
     <?= $content ?? '' ?>
 </main>
 
