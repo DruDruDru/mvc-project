@@ -13,9 +13,11 @@
             </select></label>
 
         <button class="px-12 py-3 rounded-xl bg-gray-200 mt-5">Показать номера</button>
-        <button class="px-12 py-3 rounded-xl bg-gray-200 mt-5 ml-16">
-            <a href="<?= app()->route->getUrl('/signup') ?>">Создать СисАдмина</a>
-        </button>
+        <?php if (\Src\Right\Right::suitableRight('admin')): ?>
+            <button class="px-12 py-3 rounded-xl bg-gray-200 mt-5 ml-16">
+                <a href="<?= app()->route->getUrl('/signup') ?>">Создать СисАдмина</a>
+            </button>
+        <?php endif; ?>
     </div>
     <div class="flex flex-wrap p-6 m-12 gap-5 justify-center border-4 rounded-xl border-gray-200">
         <div class="flex flex-col gap-2 bg-gray-400 py-8 px-16 rounded-xl">

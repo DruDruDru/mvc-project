@@ -3,11 +3,11 @@
 namespace Src\Auth;
 
 use Src\Session;
+use Src\Traits\FindUser;
 
 class Auth
 {
-    //Свойство для хранения любого класса, реализующего интерфейс IdentityInterface
-    private static IdentityInterface $user;
+    use FindUser;
 
     //Инициализация класса пользователя
     public static function init(IdentityInterface $user): void
@@ -33,13 +33,6 @@ class Auth
             return true;
         }
         return false;
-    }
-
-    //Возврат текущего аутентифицированного пользователя
-    public static function user()
-    {
-        $id = Session::get('id') ?? 0;
-        return self::$user->findIdentity($id);
     }
 
     //Проверка является ли текущий пользователь аутентифицированным

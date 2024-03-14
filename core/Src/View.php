@@ -41,7 +41,7 @@ class View
         return $this->getRoot() . "/$view.php";
     }
 
-    public function render(string $view = '', array $data = []): string
+    public function render(string $view = '', array $data = [])
     {
         $path = $this->getPathToView($view);
 
@@ -62,7 +62,7 @@ class View
         throw new Exception('Error render');
     }
 
-    public function __toString(): string
+    public function __toString()
     {
         return $this->render($this->view, $this->data);
     }
