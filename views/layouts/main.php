@@ -10,7 +10,7 @@
 </head>
 <body>
 <header>
-    <nav>
+    <nav class="flex gap-10">
         <a href="<?= app()->route->getUrl('/hello') ?>">Главная</a>
         <?php
         if (!app()->auth::check()):
@@ -19,6 +19,7 @@
         <?php
         else:
             ?>
+            <a href="<?= app()->route->getUrl('/panel') ?>">Панель управления</a>
             <a href="<?= app()->route->getUrl('/logout') ?>">Выход (<?= app()->auth::user()->login ?>)</a>
         <?php
         endif;
