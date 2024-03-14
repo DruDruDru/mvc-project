@@ -49,4 +49,8 @@ class Site
         app()->route->redirect('/hello');
     }
 
+    public function panel(): string
+    {
+        return new View('site.panel');
+    }
 }
