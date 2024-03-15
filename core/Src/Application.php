@@ -16,6 +16,7 @@ class Application
     private Capsule $dbManager;
     private Auth $auth;
     private Right $right;
+    private Protect $protect;
 
     public function __construct(Settings $settings)
     {
@@ -45,6 +46,8 @@ class Application
                 return $this->route;
             case 'auth':
                 return $this->auth;
+            case 'protect':
+                return $this->protect;
         }
         throw new Error('Accessing a non-existent property');
     }

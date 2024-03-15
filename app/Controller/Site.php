@@ -2,7 +2,9 @@
 
 namespace Controller;
 
+use Model\Subdivision;
 use Src\Auth\Auth;
+use Src\Protect;
 use Src\Request;
 use Src\Validator\Validator;
 use Src\View;
@@ -67,8 +69,19 @@ class Site
         app()->route->redirect('/hello');
     }
 
-    public function panel(): string
+    public function panel(Request $request): string
     {
-        return new View('site.panel');
+        if ($request->method === 'POST') {
+            $model = $request->all()['model'];
+
+            if (Protect::check_string($model, "subdivision")) {
+                Subdivision::create($request->all());
+            }
+
+
+        }
+
+        $subdivisions = Subdivision::all();
+        return new View('site.panel', ["subdivisions" => $subdivisions]);
     }
 }

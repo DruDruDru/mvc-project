@@ -6,6 +6,9 @@
 
         <label> Подразделение<br><select name="subdivision">
                 <option value="all" selected>Все</option>
+                <?php foreach($subdivisions as $subdivision): ?>
+                <option value="<?=$subdivision->subdivision_id?>"><?=$subdivision->name?> | <?=$subdivision->type?></option>
+                <?php endforeach ?>
             </select></label>
 
         <label> Абонент<br><select name="subscriber">
@@ -48,6 +51,8 @@
     </div>
     <div class="flex flex-wrap p-6 m-12 gap-5 justify-center border-4 rounded-xl border-gray-200">
         <form method="post" class="flex flex-col bg-gray-400 items-center p-12 w-96 rounded-xl gap-5">
+            <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
+            <input name="model" type="hidden" value="<?= \Src\Protect::encode_string("telephone") ?>" />
             <h2>Телефонный номер</h2>
             <p>
                 <label>Телефон <br><input type="tel" name="telephone" class="border-4 rounded-xl w-80 h-8 px-2 border-gray-200" /><label>
@@ -71,6 +76,8 @@
             </p>
         </form>
         <form method="post" class="flex flex-col bg-gray-400 items-center p-12 w-96 rounded-xl gap-5">
+            <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
+            <input name="model" type="hidden" value="<?= \Src\Protect::encode_string("subscriber") ?>" />
             <h2>Абонент</h2>
             <p>
                 <label>Имя <br><input type="text" name="firstname" class="border-4 rounded-xl w-80 h-8 px-2 border-gray-200" /><label>
@@ -89,6 +96,8 @@
             </p>
         </form>
         <form method="post" class="flex flex-col bg-gray-400 items-center p-12 w-96 rounded-xl gap-5">
+            <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
+            <input name="model" type="hidden" value="<?= \Src\Protect::encode_string("room") ?>" />
             <h2>Помещение</h2>
             <p>
                 <label>Номер помещения <br><input type="number" name="room_num" class="border-4 rounded-xl w-80 h-8 px-2 border-gray-200" /><label>
@@ -111,6 +120,8 @@
             </p>
         </form>
         <form method="post" class="flex flex-col bg-gray-400 items-center p-12 w-96 rounded-xl gap-5">
+            <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
+            <input name="model" type="hidden" value="<?= \Src\Protect::encode_string("subdivision") ?>" />
             <h2>Подразделение</h2>
             <p>
                 <label>Название <br><input type="text" name="name" class="border-4 rounded-xl w-80 h-8 px-2 border-gray-200" /><label>
