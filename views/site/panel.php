@@ -31,31 +31,19 @@
         <?php endif; ?>
     </div>
     <div class="flex flex-wrap p-6 m-12 gap-5 justify-center border-4 rounded-xl border-gray-200">
+        <?php foreach($telephones as $telephone): ?>
         <div class="flex flex-col gap-2 bg-gray-400 py-8 px-16 rounded-xl">
-            <span><span>Номер: </span>+7 777 777 77 77</span>
-            <span><span>ФИО: </span>Вася Иванов Петрович</span>
-            <span><span>Дата рождения: </span>09.10.2002</span>
+            <span><span>Номер: </span><?=$telephone->telephone_number?></span>
+            <span><span>ФИО: </span>
+                <?=\Model\Subscriber::getSubscriber($telephone->subscriber_id)->lastname?>
+                <?=\Model\Subscriber::getSubscriber($telephone->subscriber_id)->firstname?>
+                <?=\Model\Subscriber::getSubscriber($telephone->subscriber_id)->patronymic?>
+            </span>
+            <span><span>Дата рождения: </span>
+                <?=\Model\Subscriber::getSubscriber($telephone->subscriber_id)->birth_date?>
+            </span>
         </div>
-        <div class="flex flex-col gap-2 bg-gray-400 py-8 px-16 rounded-xl">
-            <span><span>Номер: </span>+7 777 777 77 77</span>
-            <span><span>ФИО: </span>Вася Иванов Петрович</span>
-            <span><span>Дата рождения: </span>09.10.2002</span>
-        </div>
-        <div class="flex flex-col gap-2 bg-gray-400 py-8 px-16 rounded-xl">
-            <span><span>Номер: </span>+7 777 777 77 77</span>
-            <span><span>ФИО: </span>Вася Иванов Петрович</span>
-            <span><span>Дата рождения: </span>09.10.2002</span>
-        </div>
-        <div class="flex flex-col gap-2 bg-gray-400 py-8 px-16 rounded-xl">
-            <span><span>Номер: </span>+7 777 777 77 77</span>
-            <span><span>ФИО: </span>Вася Иванов Петрович</span>
-            <span><span>Дата рождения: </span>09.10.2002</span>
-        </div>
-        <div class="flex flex-col gap-2 bg-gray-400 py-8 px-16 rounded-xl">
-            <span><span>Номер: </span>+7 777 777 77 77</span>
-            <span><span>ФИО: </span>Вася Иванов Петрович</span>
-            <span><span>Дата рождения: </span>09.10.2002</span>
-        </div>
+        <?php endforeach; ?>
     </div>
     <div class="flex flex-wrap p-6 m-12 gap-5 justify-center border-4 rounded-xl border-gray-200">
         <form method="post" class="flex flex-col bg-gray-400 items-center p-12 w-96 rounded-xl gap-5">

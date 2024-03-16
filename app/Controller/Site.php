@@ -97,12 +97,13 @@ class Site
         $subdivisions = Subdivision::all();
         $subscribers = Subscriber::all();
         $rooms = Room::all();
+        $telephones = Telephone::all();
 
         $rooms_types = DB::table('rooms_types')->get();
         $subdivisions_types = DB::table('subdivisions_types')->get();
 
-        return new View('site.panel', ["subdivisions" => $subdivisions, "subscribers" => $subscribers,
+        return (new View)->render('site.panel', ["subdivisions" => $subdivisions, "subscribers" => $subscribers,
                                             "rooms" => $rooms, "rooms_types" => $rooms_types,
-                                            "subdivisions_types" => $subdivisions_types]);
+                                            "subdivisions_types" => $subdivisions_types, "telephones" => $telephones]);
     }
 }
