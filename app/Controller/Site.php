@@ -3,6 +3,7 @@
 namespace Controller;
 
 use Model\Subdivision;
+use Model\Subscriber;
 use Src\Auth\Auth;
 use Src\Protect;
 use Src\Request;
@@ -74,14 +75,19 @@ class Site
         if ($request->method === 'POST') {
             $model = $request->all()['model'];
 
-            if (Protect::check_string($model, "subdivision")) {
-                Subdivision::create($request->all());
+            switch (true) {
+                case Protect::check_string($model, "subdivision"):
+                    Subdivision::create($request->all());
+                    break;
+                case Protect::check_string($model, "subscriber"):
+                    Subscriber::create($request->all());
+                    break;
             }
-
 
         }
 
         $subdivisions = Subdivision::all();
-        return new View('site.panel', ["subdivisions" => $subdivisions]);
+        $subscribers = Subscriber::all();
+        return new View('site.panel', ["subdivisions" => $subdivisions, "subscribers" => $subscribers]);
     }
 }

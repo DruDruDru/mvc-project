@@ -13,7 +13,12 @@
 
         <label> Абонент<br><select name="subscriber">
                 <option value="all" selected>Все</option>
-            </select></label>
+                <?php foreach ($subscribers as $subscriber): ?>
+                <option value="<?=$subscriber->subscriber_id?>">
+                    <?=$subscriber->firstname?> <?=$subscriber->lastname?> <?=$subscriber->patronymic?>
+                </option>
+                <?php endforeach; ?>
+        </select></label>
 
         <button class="px-12 py-3 rounded-xl bg-gray-200 mt-5">Показать номера</button>
         <?php if (\Src\Right\Right::suitableRight('admin')): ?>
