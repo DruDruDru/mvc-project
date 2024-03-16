@@ -1,29 +1,30 @@
 <div>
     <div class="flex items-center gap-10 justify-center pl-24">
-        <label> Помещение<br><select name="room">
-                <option value="all" selected>Все</option>
-                <?php foreach($rooms as $room): ?>
-                <option value="<?=$room->room_num?>">(<?=$room->room_num?>) <?=$room->name?></option>
-                <?php endforeach;?>
+        <form method="get" class="flex items-center gap-10 justify-center pl-24">
+            <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
+            <label> Помещение<br><select name="room">
+                    <option value="all" selected>Все</option>
+                    <?php foreach($rooms as $room): ?>
+                        <option value="<?=$room->room_num?>">(<?=$room->room_num?>) <?=$room->name?></option>
+                    <?php endforeach;?>
+            </select></label>
+            <label> Подразделение<br><select name="subdivision">
+                    <option value="all" selected>Все</option>
+                    <?php foreach($subdivisions as $subdivision): ?>
+                        <option value="<?=$subdivision->subdivision_id?>"><?=$subdivision->name?> | <?=$subdivision->type?></option>
+                    <?php endforeach ?>
+            </select></label>
+            <label> Абонент<br><select name="subscriber">
+                    <option value="all" selected>Все</option>
+                    <?php foreach ($subscribers as $subscriber): ?>
+                        <option value="<?=$subscriber->subscriber_id?>">
+                            <?=$subscriber->firstname?> <?=$subscriber->lastname?> <?=$subscriber->patronymic?>
+                        </option>
+                    <?php endforeach; ?>
             </select></label>
 
-        <label> Подразделение<br><select name="subdivision">
-                <option value="all" selected>Все</option>
-                <?php foreach($subdivisions as $subdivision): ?>
-                <option value="<?=$subdivision->subdivision_id?>"><?=$subdivision->name?> | <?=$subdivision->type?></option>
-                <?php endforeach ?>
-            </select></label>
-
-        <label> Абонент<br><select name="subscriber">
-                <option value="all" selected>Все</option>
-                <?php foreach ($subscribers as $subscriber): ?>
-                <option value="<?=$subscriber->subscriber_id?>">
-                    <?=$subscriber->firstname?> <?=$subscriber->lastname?> <?=$subscriber->patronymic?>
-                </option>
-                <?php endforeach; ?>
-        </select></label>
-
-        <button class="px-12 py-3 rounded-xl bg-gray-200 mt-5">Показать номера</button>
+            <input type="submit" class="px-12 py-3 rounded-xl bg-gray-200 mt-5 hover:opacity-75" value="Показать номера" />
+        </form>
         <?php if (\Src\Right\Right::suitableRight('admin')): ?>
             <button class="px-12 py-3 rounded-xl bg-gray-200 mt-5 ml-16">
                 <a href="<?= app()->route->getUrl('/signup') ?>">Создать СисАдмина</a>
@@ -45,6 +46,7 @@
         </div>
         <?php endforeach; ?>
     </div>
+    <p class="text-right px-12">Абонентов: <?= $subscribersCount ?></p>
     <div class="flex flex-wrap p-6 m-12 gap-5 justify-center border-4 rounded-xl border-gray-200">
         <form method="post" class="flex flex-col bg-gray-400 items-center p-12 w-96 rounded-xl gap-5">
             <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>

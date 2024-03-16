@@ -77,7 +77,7 @@ class Site
     {
         if ($request->method === 'POST') {
             $model = $request->all()['model'];
-
+            $telephones = Telephone::all();
             switch (true) {
                 case Protect::check_string($model, "subdivision"):
                     Subdivision::create($request->all());
@@ -94,16 +94,38 @@ class Site
             }
         }
 
-        $subdivisions = Subdivision::all();
-        $subscribers = Subscriber::all();
-        $rooms = Room::all();
-        $telephones = Telephone::all();
+        if ($request->method === 'GET') {
+            $subscriber = $request->all()['subscriber'] ?? "all";
+            $room = $request->all()['room'] ?? "all";
+            $subdivision = $request->all()['subdivision'] ?? "all";
+            $telephones = Telephone::all();
 
-        $rooms_types = DB::table('rooms_types')->get();
-        $subdivisions_types = DB::table('subdivisions_types')->get();
+            if ($subscriber !== 'all' && (int)$subscriber) {
+                $telephones = $telephones->where('subscriber_id', $subscriber);
+            }
+            if ($room !== 'all' && (int)$room) {
+                $telephones = $telephones->where('room_num', $room);
+            }
+            if ($subdivision !== 'all' && (int)$subdivision) {
+                $telephones = $telephones->whereIn(
+                    'room_num',
+                    Room::where('subdivision_id', $subdivision)->pluck('room_num')->toArray()
+                );
+            }
+            $subscribersCount = count(array_unique($telephones->pluck('subscriber_id')->toArray()));
+        }
+
+        $subdivisions = Subdivision::all() ?? [];
+        $subscribers = Subscriber::all() ?? [];
+        $rooms = Room::all() ?? [];
+
+        $rooms_types = DB::table('rooms_types')->get() ?? [];
+        $subdivisions_types = DB::table('subdivisions_types')->get() ?? [];
 
         return (new View)->render('site.panel', ["subdivisions" => $subdivisions, "subscribers" => $subscribers,
                                             "rooms" => $rooms, "rooms_types" => $rooms_types,
-                                            "subdivisions_types" => $subdivisions_types, "telephones" => $telephones]);
+                                            "subdivisions_types" => $subdivisions_types, "telephones" => $telephones ?? [],
+                                            "subscribersCount" => $subscribersCount ?? 0]);
     }
+
 }
