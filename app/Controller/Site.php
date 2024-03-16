@@ -13,6 +13,7 @@ use Src\Validator\Validator;
 use Src\View;
 use Model\Post;
 use Model\User;
+use Illuminate\Database\Capsule\Manager as DB;
 
 class Site
 {
@@ -96,7 +97,12 @@ class Site
         $subdivisions = Subdivision::all();
         $subscribers = Subscriber::all();
         $rooms = Room::all();
+
+        $rooms_types = DB::table('rooms_types')->get();
+        $subdivisions_types = DB::table('subdivisions_types')->get();
+
         return new View('site.panel', ["subdivisions" => $subdivisions, "subscribers" => $subscribers,
-                                            "rooms" => $rooms]);
+                                            "rooms" => $rooms, "rooms_types" => $rooms_types,
+                                            "subdivisions_types" => $subdivisions_types]);
     }
 }

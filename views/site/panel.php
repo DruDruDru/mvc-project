@@ -120,7 +120,13 @@
                 <label>Название <br><input type="text" name="name" class="border-4 rounded-xl w-80 h-8 px-2 border-gray-200" /><label>
             </p>
             <p>
-                <label>Тип помещения <br><input type="text" name="type" class="border-4 rounded-xl w-80 h-8 px-2 border-gray-200" /><label>
+                <label>Тип помещения <br>
+                    <select name="type" class="border-4 rounded-xl w-80 h-8 px-2 border-gray-200">
+                        <?php foreach($rooms_types as $room_type): ?>
+                            <option value="<?=$room_type->type?>"><?=$room_type->type?></option>
+                        <?php endforeach ?>
+                    </select>
+                <label>
             </p>
             <p>
                 <label>Подразделение <br>
@@ -143,7 +149,13 @@
                 <label>Название <br><input type="text" name="name" class="border-4 rounded-xl w-80 h-8 px-2 border-gray-200" /><label>
             </p>
             <p>
-                <label>Тип подразделения <br><input type="text" name="type" class="border-4 rounded-xl w-80 h-8 px-2 border-gray-200" /><label>
+                <label>Тип подразделения <br>
+                    <select name="type" class="border-4 rounded-xl w-80 h-8 px-2 border-gray-200">
+                        <?php foreach($subdivisions_types as $subdivision_type): ?>
+                            <option value="<?=$subdivision_type->type?>"><?=$subdivision_type->type?></option>
+                        <?php endforeach ?>
+                    </select>
+                <label>
             </p>
             <p>
                 <input type="submit" value="Создать" class="px-12 py-3 rounded-xl bg-gray-200 mt-5" />
