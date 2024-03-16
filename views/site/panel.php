@@ -2,6 +2,9 @@
     <div class="flex items-center gap-10 justify-center pl-24">
         <label> Помещение<br><select name="room">
                 <option value="all" selected>Все</option>
+                <?php foreach($rooms as $room): ?>
+                <option value="<?=$room->room_num?>">(<?=$room->room_num?>) <?=$room->name?></option>
+                <?php endforeach;?>
             </select></label>
 
         <label> Подразделение<br><select name="subdivision">
@@ -116,7 +119,9 @@
             <p>
                 <label>Подразделение <br>
                     <select name="subdivision_id" class="border-4 rounded-xl w-80 h-8 px-2 border-gray-200">
-                        <option value="">some</option>
+                        <?php foreach($subdivisions as $subdivision): ?>
+                            <option value="<?=$subdivision->subdivision_id?>"><?=$subdivision->name?> | <?=$subdivision->type?></option>
+                        <?php endforeach ?>
                     </select>
                 <label>
             </p>

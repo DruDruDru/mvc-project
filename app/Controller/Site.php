@@ -2,6 +2,7 @@
 
 namespace Controller;
 
+use Model\Room;
 use Model\Subdivision;
 use Model\Subscriber;
 use Src\Auth\Auth;
@@ -82,12 +83,17 @@ class Site
                 case Protect::check_string($model, "subscriber"):
                     Subscriber::create($request->all());
                     break;
+                case Protect::check_string($model, "room"):
+                    Room::create($request->all());
+                    break;
             }
 
         }
 
         $subdivisions = Subdivision::all();
         $subscribers = Subscriber::all();
-        return new View('site.panel', ["subdivisions" => $subdivisions, "subscribers" => $subscribers]);
+        $rooms = Room::all();
+        return new View('site.panel', ["subdivisions" => $subdivisions, "subscribers" => $subscribers,
+                                            "rooms" => $rooms,]);
     }
 }
