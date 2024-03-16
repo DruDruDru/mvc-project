@@ -5,6 +5,7 @@ namespace Controller;
 use Model\Room;
 use Model\Subdivision;
 use Model\Subscriber;
+use Model\Telephone;
 use Src\Auth\Auth;
 use Src\Protect;
 use Src\Request;
@@ -86,14 +87,16 @@ class Site
                 case Protect::check_string($model, "room"):
                     Room::create($request->all());
                     break;
+                case Protect::check_string($model, "telephone"):
+                    Telephone::create($request->all());
+                    break;
             }
-
         }
 
         $subdivisions = Subdivision::all();
         $subscribers = Subscriber::all();
         $rooms = Room::all();
         return new View('site.panel', ["subdivisions" => $subdivisions, "subscribers" => $subscribers,
-                                            "rooms" => $rooms,]);
+                                            "rooms" => $rooms]);
     }
 }

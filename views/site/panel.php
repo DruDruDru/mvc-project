@@ -63,19 +63,25 @@
             <input name="model" type="hidden" value="<?= \Src\Protect::encode_string("telephone") ?>" />
             <h2>Телефонный номер</h2>
             <p>
-                <label>Телефон <br><input type="tel" name="telephone" class="border-4 rounded-xl w-80 h-8 px-2 border-gray-200" /><label>
+                <label>Телефон <br><input type="tel" name="telephone_number" class="border-4 rounded-xl w-80 h-8 px-2 border-gray-200" /><label>
             </p>
             <p>
                 <label>Помещение <br>
                     <select name="room_num" class="border-4 rounded-xl w-80 h-8 px-2 border-gray-200">
-                        <option value="">some</option>
+                        <?php foreach($rooms as $room): ?>
+                            <option value="<?=$room->room_num?>">(<?=$room->room_num?>) <?=$room->name?></option>
+                        <?php endforeach;?>
                     </select>
                 <label>
             </p>
             <p>
                 <label>Абонент <br>
                     <select name="subscriber_id" class="border-4 rounded-xl w-80 h-8 px-2 border-gray-200">
-                        <option value="">some</option>
+                        <?php foreach ($subscribers as $subscriber): ?>
+                            <option value="<?=$subscriber->subscriber_id?>">
+                                <?=$subscriber->firstname?> <?=$subscriber->lastname?> <?=$subscriber->patronymic?>
+                            </option>
+                        <?php endforeach; ?>
                     </select>
                 <label>
             </p>
