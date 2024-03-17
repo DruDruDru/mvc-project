@@ -75,30 +75,105 @@ class Site
 
     public function panel(Request $request): string
     {
+        $telephones = Telephone::all();
+        $subdivisions = Subdivision::all() ?? [];
+        $subscribers = Subscriber::all() ?? [];
+        $rooms = Room::all() ?? [];
+
+        $rooms_types = DB::table('rooms_types')->get() ?? [];
+        $subdivisions_types = DB::table('subdivisions_types')->get() ?? [];
+
         if ($request->method === 'POST') {
-            $model = $request->all()['model'];
             $telephones = Telephone::all();
+            $subscribersCount = count(array_unique($telephones->pluck('subscriber_id')->toArray()));
+            $model = $request->all()['model'];
             switch (true) {
+
                 case Protect::check_string($model, "subdivision"):
-                    Subdivision::create($request->all());
+                    $validator = new Validator($request->all(), [
+                        'type' => ['required'],
+                        'name' => ['required']
+                    ], [
+                        'required' => 'Поле :field должно быть заполнено',
+                    ]);
+                    if ($validator->fails()) {
+                        return new View('site.panel', ["subdivisions" => $subdivisions, "subscribers" => $subscribers,
+                            "rooms" => $rooms, "rooms_types" => $rooms_types,
+                            "subdivisions_types" => $subdivisions_types, "telephones" => $telephones,
+                            "subscribersCount" => $subscribersCount,
+                            "subdivisionErrors" => json_encode($validator->errors(), JSON_UNESCAPED_UNICODE)]);
+                    } else {
+                        Subdivision::create($request->all());
+                    }
                     break;
+
                 case Protect::check_string($model, "subscriber"):
-                    Subscriber::create($request->all());
+                    $validator = new Validator($request->all(), [
+                        'firstname' => ['required'],
+                        'lastname' => ['required'],
+                        'birth_date' => ['required']
+                    ], [
+                        'required' => 'Поле :field должно быть заполнено',
+                    ]);
+                    if ($validator->fails()) {
+                        return new View('site.panel', ["subdivisions" => $subdivisions, "subscribers" => $subscribers,
+                            "rooms" => $rooms, "rooms_types" => $rooms_types,
+                            "subdivisions_types" => $subdivisions_types, "telephones" => $telephones,
+                            "subscribersCount" => $subscribersCount,
+                            "subscriberErrors" => json_encode($validator->errors(), JSON_UNESCAPED_UNICODE)]);
+                    } else {
+                        Subscriber::create($request->all());
+                    }
                     break;
+
                 case Protect::check_string($model, "room"):
-                    Room::create($request->all());
+                    $validator = new Validator($request->all(), [
+                        'room_num' => ['required', 'unique:rooms,room_num'],
+                        'name' => ['required'],
+                        'type' => ['required'],
+                        'subdivision_id' => ['required']
+                    ], [
+                        'required' => 'Поле :field должно быть заполнено',
+                        'unique' => 'Поле :field должно быть уникально'
+                    ]);
+                    if ($validator->fails()) {
+                        return new View('site.panel', ["subdivisions" => $subdivisions, "subscribers" => $subscribers,
+                            "rooms" => $rooms, "rooms_types" => $rooms_types,
+                            "subdivisions_types" => $subdivisions_types, "telephones" => $telephones,
+                            "subscribersCount" => $subscribersCount,
+                            "roomErrors" => json_encode($validator->errors(), JSON_UNESCAPED_UNICODE)]);
+                    } else {
+                        Room::create($request->all());
+                    }
                     break;
+
                 case Protect::check_string($model, "telephone"):
-                    Telephone::create($request->all());
+                    $validator = new Validator($request->all(), [
+                        'telephone_number' => ['required', 'unique:telephones,telephone_number'],
+                        'room_num' => ['required'],
+                        'subscriber_id' => ['required']
+                    ], [
+                        'required' => 'Поле :field должно быть заполнено',
+                        'unique' => 'Такой номер уже занят'
+                    ]);
+                    if ($validator->fails()) {
+                        return new View('site.panel', ["subdivisions" => $subdivisions, "subscribers" => $subscribers,
+                            "rooms" => $rooms, "rooms_types" => $rooms_types,
+                            "subdivisions_types" => $subdivisions_types, "telephones" => $telephones,
+                            "subscribersCount" => $subscribersCount,
+                            "telephoneErrors" => json_encode($validator->errors(), JSON_UNESCAPED_UNICODE)]);
+                    } else {
+                        Telephone::create($request->all());
+                    }
                     break;
             }
         }
 
         if ($request->method === 'GET') {
+            $telephones = Telephone::all();
             $subscriber = $request->all()['subscriber'] ?? "all";
             $room = $request->all()['room'] ?? "all";
             $subdivision = $request->all()['subdivision'] ?? "all";
-            $telephones = Telephone::all();
 
             if ($subscriber !== 'all' && (int)$subscriber) {
                 $telephones = $telephones->where('subscriber_id', $subscriber);
@@ -115,16 +190,9 @@ class Site
             $subscribersCount = count(array_unique($telephones->pluck('subscriber_id')->toArray()));
         }
 
-        $subdivisions = Subdivision::all() ?? [];
-        $subscribers = Subscriber::all() ?? [];
-        $rooms = Room::all() ?? [];
-
-        $rooms_types = DB::table('rooms_types')->get() ?? [];
-        $subdivisions_types = DB::table('subdivisions_types')->get() ?? [];
-
         return (new View)->render('site.panel', ["subdivisions" => $subdivisions, "subscribers" => $subscribers,
                                             "rooms" => $rooms, "rooms_types" => $rooms_types,
-                                            "subdivisions_types" => $subdivisions_types, "telephones" => $telephones ?? [],
+                                            "subdivisions_types" => $subdivisions_types, "telephones" => $telephones,
                                             "subscribersCount" => $subscribersCount ?? 0]);
     }
 

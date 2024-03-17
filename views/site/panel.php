@@ -52,6 +52,9 @@
             <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
             <input name="model" type="hidden" value="<?= \Src\Protect::encode_string("telephone") ?>" />
             <h2>Телефонный номер</h2>
+            <p class="text-red-800">
+                <span><?=$telephoneErrors ?? ""?></span>
+            </p>
             <p>
                 <label>Телефон <br><input type="tel" name="telephone_number" class="border-4 rounded-xl w-80 h-8 px-2 border-gray-200" /><label>
             </p>
@@ -62,7 +65,7 @@
                             <option value="<?=$room->room_num?>">(<?=$room->room_num?>) <?=$room->name?></option>
                         <?php endforeach;?>
                     </select>
-                <label>
+                    <label>
             </p>
             <p>
                 <label>Абонент <br>
@@ -73,7 +76,7 @@
                             </option>
                         <?php endforeach; ?>
                     </select>
-                <label>
+                    <label>
             </p>
             <p>
                 <input type="submit" value="Создать" class="px-12 py-3 rounded-xl bg-gray-200 mt-5" />
@@ -83,6 +86,9 @@
             <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
             <input name="model" type="hidden" value="<?= \Src\Protect::encode_string("subscriber") ?>" />
             <h2>Абонент</h2>
+            <p class="text-red-800">
+                <span><?=$subscriberErrors ?? ""?></span>
+            </p>
             <p>
                 <label>Имя <br><input type="text" name="firstname" class="border-4 rounded-xl w-80 h-8 px-2 border-gray-200" /><label>
             </p>
@@ -103,6 +109,9 @@
             <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
             <input name="model" type="hidden" value="<?= \Src\Protect::encode_string("room") ?>" />
             <h2>Помещение</h2>
+            <p class="text-red-800">
+                <span><?=$roomErrors ?? ""?></span>
+            </p>
             <p>
                 <label>Номер помещения <br><input type="number" name="room_num" class="border-4 rounded-xl w-80 h-8 px-2 border-gray-200" /><label>
             </p>
@@ -116,7 +125,7 @@
                             <option value="<?=$room_type->type?>"><?=$room_type->type?></option>
                         <?php endforeach ?>
                     </select>
-                <label>
+                    <label>
             </p>
             <p>
                 <label>Подразделение <br>
@@ -125,7 +134,7 @@
                             <option value="<?=$subdivision->subdivision_id?>"><?=$subdivision->name?> | <?=$subdivision->type?></option>
                         <?php endforeach ?>
                     </select>
-                <label>
+                    <label>
             </p>
             <p>
                 <input type="submit" value="Создать" class="px-12 py-3 rounded-xl bg-gray-200 mt-5" />
@@ -135,6 +144,9 @@
             <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
             <input name="model" type="hidden" value="<?= \Src\Protect::encode_string("subdivision") ?>" />
             <h2>Подразделение</h2>
+            <p class="text-red-800">
+                <span><?=$subdivisionErrors ?? ""?></span>
+            </p>
             <p>
                 <label>Название <br><input type="text" name="name" class="border-4 rounded-xl w-80 h-8 px-2 border-gray-200" /><label>
             </p>
@@ -145,7 +157,7 @@
                             <option value="<?=$subdivision_type->type?>"><?=$subdivision_type->type?></option>
                         <?php endforeach ?>
                     </select>
-                <label>
+                    <label>
             </p>
             <p>
                 <input type="submit" value="Создать" class="px-12 py-3 rounded-xl bg-gray-200 mt-5" />
