@@ -149,12 +149,14 @@ class Site
 
                 case Protect::check_string($model, "telephone"):
                     $validator = new Validator($request->all(), [
-                        'telephone_number' => ['required', 'unique:telephones,telephone_number'],
+                        'telephone_number' => ['required', 'unique:telephones,telephone_number',
+                            'regex:/^\s?(\+\s?7|8)([- ()]*\d){10}$/'],
                         'room_num' => ['required'],
                         'subscriber_id' => ['required']
                     ], [
                         'required' => 'Поле :field должно быть заполнено',
-                        'unique' => 'Такой номер уже занят'
+                        'unique' => 'Такой номер уже занят',
+                        'regex' => 'Номер записан в непрваильной форме'
                     ]);
                     if ($validator->fails()) {
                         return new View('site.panel', ["subdivisions" => $subdivisions, "subscribers" => $subscribers,
