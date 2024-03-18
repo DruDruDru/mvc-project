@@ -202,6 +202,47 @@ class Site
         $rooms = Room::all();
         $subdivisions = Subdivision::all();
 
+        $updateRooms = [];
+        $updateSubdivisions = [];
+
+        if ($request->method === 'GET' ) {
+            $search = $request->all()['search'] ?? "";
+
+            if (!$search) {
+                return (new View)->render('site.search', ["rooms" => $rooms, "subdivisions" => $subdivisions]);
+            }
+
+            foreach ($rooms as $room) {
+                $columns = $room
+                    ->only('room_num', 'name', 'type', 'subdivision_id');
+                foreach ($columns as $key => $field) {
+                    if ($key === 'subdivision_id') {
+                        $sub = Subdivision::where('subdivision_id', $field)->first();
+                        if (str_contains($sub->name, $search) ||
+                            str_contains($sub->type, $search)) {
+                            $updateRooms[] = $room;
+                        }
+                    }
+                    elseif (str_contains($field, $search)) {
+                        $updateRooms[] = $room;
+                    }
+                }
+            }
+
+            foreach ($subdivisions as $subdivision) {
+                $columns = $subdivision
+                    ->only('subdivision_id', 'name', 'type');
+                foreach ($columns as $field) {
+                    if (str_contains($field, $search)) {
+                        $updateSubdivisions[] = $subdivision;
+                    }
+                }
+            }
+
+            $rooms = $updateRooms;
+            $subdivisions = $updateSubdivisions;
+        }
+
         return (new View)->render('site.search', ["rooms" => $rooms, "subdivisions" => $subdivisions]);
     }
 }

@@ -9,6 +9,7 @@
     <div class="flex flex-wrap p-6 m-12 gap-5 justify-center border-4 rounded-xl border-gray-200">
         <?php foreach($subdivisions as $subdivision): ?>
             <div class="flex flex-col p-6 gap-5 justify-center border-4 rounded-xl border-gray-200">
+                <span>ID: <?=$subdivision->subdivision_id ?></span>
                 <span>Имя: <?= $subdivision->name ?></span>
                 <span>Тип подразделения: <?= $subdivision->type ?></span>
                 <img src="<?=$subdivision->image?>" alt="#" width="400" height="250" />
@@ -19,9 +20,9 @@
                 <span>Номер комнаты: №<?= $room->room_num ?></span>
                 <span>Название: <?= $room->name ?></span>
                 <span>Тип: <?= $room->type ?></span>
-                <span>Подразделение: 
-                    <?= \Model\Subdivision::where('subdivision_id', $room->subdivision_id)->first()->name?> |
-                    <?= \Model\Subdivision::where('subdivision_id', $room->subdivision_id)->first()->type ?>
+                <span>Подразделение:
+                    (<?= \Model\Subdivision::where('subdivision_id', $room->subdivision_id)->first()->name?> -
+                    <?= \Model\Subdivision::where('subdivision_id', $room->subdivision_id)->first()->type ?>)
                 </span>
                 <img src="<?=$subdivision->image?>" alt="#" width="400" height="250" />
             </div>
