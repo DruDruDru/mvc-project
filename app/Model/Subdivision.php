@@ -15,4 +15,5 @@ class Subdivision extends Model
         'name',
         'type'
     ];
+
 }

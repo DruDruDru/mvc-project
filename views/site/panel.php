@@ -105,7 +105,7 @@
                 <input type="submit" value="Создать" class="px-12 py-3 rounded-xl bg-gray-200 mt-5" />
             </p>
         </form>
-        <form method="post" class="flex flex-col bg-gray-400 items-center p-12 w-96 rounded-xl gap-5">
+        <form method="post" class="flex flex-col bg-gray-400 items-center p-12 w-96 rounded-xl gap-5" enctype="multipart/form-data">
             <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
             <input name="model" type="hidden" value="<?= \Src\Protect::encode_string("room") ?>" />
             <h2>Помещение</h2>
@@ -136,6 +136,9 @@
                     </select>
                     <label>
             </p>
+            <p class="flex justify-center">
+                <label>Изображение <br><input type="file" name="image"/></label>
+            </p>
             <p>
                 <input type="submit" value="Создать" class="px-12 py-3 rounded-xl bg-gray-200 mt-5" />
             </p>
@@ -158,6 +161,9 @@
                         <?php endforeach ?>
                     </select>
                     <label>
+            </p>
+            <p class="flex justify-center">
+                <label>Изображение <br><input type="file" name="image"/></label>
             </p>
             <p>
                 <input type="submit" value="Создать" class="px-12 py-3 rounded-xl bg-gray-200 mt-5" />

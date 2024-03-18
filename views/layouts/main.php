@@ -20,6 +20,7 @@
         else:
             ?>
             <a href="<?= app()->route->getUrl('/panel') ?>">Панель управления</a>
+            <a href="<?= app()->route->getUrl('/search') ?>">Поиск Подразделений и помещений</a>
             <a href="<?= app()->route->getUrl('/logout') ?>">Выход (<?= app()->auth::user()->login ?>)</a>
         <?php
         endif;

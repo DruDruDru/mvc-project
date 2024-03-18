@@ -156,7 +156,7 @@ class Site
                     ], [
                         'required' => 'Поле :field должно быть заполнено',
                         'unique' => 'Такой номер уже занят',
-                        'regex' => 'Номер записан в непрваильной форме'
+                        'regex' => 'Номер должен быть записан в форме: /^\s?(\+\s?7|8)([- ()]*\d){10}$/'
                     ]);
                     if ($validator->fails()) {
                         return new View('site.panel', ["subdivisions" => $subdivisions, "subscribers" => $subscribers,
@@ -197,5 +197,11 @@ class Site
                                             "subdivisions_types" => $subdivisions_types, "telephones" => $telephones,
                                             "subscribersCount" => $subscribersCount ?? 0]);
     }
+    public function search(Request $request)
+    {
+        $rooms = Room::all();
+        $subdivisions = Subdivision::all();
 
+        return (new View)->render('site.search', ["rooms" => $rooms, "subdivisions" => $subdivisions]);
+    }
 }
