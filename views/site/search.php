@@ -12,7 +12,6 @@
                 <span>ID: <?=$subdivision->subdivision_id ?></span>
                 <span>Имя: <?= $subdivision->name ?></span>
                 <span>Тип подразделения: <?= $subdivision->type ?></span>
-                <img src="<?=$subdivision->image?>" alt="#" width="400" height="250" />
             </div>
         <?php endforeach; ?>
         <?php foreach($rooms as $room): ?>
@@ -24,7 +23,6 @@
                     (<?= \Model\Subdivision::where('subdivision_id', $room->subdivision_id)->first()->name?> -
                     <?= \Model\Subdivision::where('subdivision_id', $room->subdivision_id)->first()->type ?>)
                 </span>
-                <img src="<?=$subdivision->image?>" alt="#" width="400" height="250" />
             </div>
         <?php endforeach; ?>
     </div>

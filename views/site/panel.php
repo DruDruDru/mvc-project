@@ -136,9 +136,6 @@
                     </select>
                     <label>
             </p>
-            <p class="flex justify-center">
-                <label>Изображение <br><input type="file" name="image"/></label>
-            </p>
             <p>
                 <input type="submit" value="Создать" class="px-12 py-3 rounded-xl bg-gray-200 mt-5" />
             </p>
@@ -161,9 +158,6 @@
                         <?php endforeach ?>
                     </select>
                     <label>
-            </p>
-            <p class="flex justify-center">
-                <label>Изображение <br><input type="file" name="image"/></label>
             </p>
             <p>
                 <input type="submit" value="Создать" class="px-12 py-3 rounded-xl bg-gray-200 mt-5" />
